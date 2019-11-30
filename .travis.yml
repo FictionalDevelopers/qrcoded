@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t fictinaldevelopers/qrcoded-client .
+
+script:
+  - docker image ls
+
+deploy:
+  on:
+    branch: master
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "qrcoded-client"
+  env: "QrcodedClient-env-1"
+  bucket: "qrcoded-client"
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
